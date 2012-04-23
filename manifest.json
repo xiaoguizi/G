@@ -1,5 +1,5 @@
 {
-   "name": "G终极者",
+   "name": "All in G",
    "manifest_version": 2,
    "content_scripts": [ {
       "exclude_globs": [ 
@@ -41,8 +41,8 @@
    } ],
    "icons": {
       "16": "img/logo16.png",
-      "48": "img/logo16.png",
-      "128": "img/logo16.png"
+      "48": "img/logo48.png",
+      "128": "img/logo128.png"
    },
    "converted_from_user_script": true,
    "options_page": "options.html",
@@ -54,7 +54,7 @@
    "permissions": [
       "storage"
    ],
-   "description": "",
+   "description": "实用功能整合--by Koala",
    "version": "1.0"
 }
 
