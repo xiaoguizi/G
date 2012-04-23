@@ -1,0 +1,60 @@
+{
+   "name": "G终极者",
+   "manifest_version": 2,
+   "content_scripts": [ {
+      "exclude_globs": [ 
+         "http://movie.douban.com/", 
+         "http://music.douban.com/", 
+         "http://book.douban.com/", 
+         "http://www.douban.com/*", 
+         "http://9.douban.com/*", 
+         "http://*.douban.com/subject/*/edit", 
+         "http://*.douban.com/subject/*/update_image", 
+         "http://*.douban.com/subject/*/edit\\?mine", 
+         "http://*.douban.com/subject/*/new_version", 
+         "http://*.douban.com/subject/*/offers", 
+         "http://*.douban.com/subject/*/new_offer", 
+         "http://*.douban.com/subject/offer/*/", 
+         "http://*.douban.com/subject/*/cinema\\?view=ticket", 
+         "http://*.douban.com/subject/*/doulists", 
+         "http://*.douban.com/subject/*/all_photos", 
+         "http://*.douban.com/subject/*/mupload", 
+         "http://*.douban.com/subject/*/comments", 
+         "http://*.douban.com/subject/*/reviews", 
+         "http://*.douban.com/subject/*/new_review", 
+         "http://*.douban.com/subject/*/group_collectors", 
+         "http://*.douban.com/subject/*/discussion/", 
+         "http://*.douban.com/subject/*/wishes", 
+         "http://*.douban.com/subject/*/doings", 
+         "http://*.douban.com/subject/*/collections" 
+      ],
+      "exclude_matches": [  ],
+      "include_globs": [ 
+         "http://movie.douban.com/subject/*", 
+         "http://music.douban.com/subject/*", 
+         "http://book.douban.com/subject/*",
+         "http://user.qzone.qq.com/*"
+      ],
+      "js": [ "jquery.js","script.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_idle"
+   } ],
+   "icons": {
+      "16": "img/logo16.png",
+      "48": "img/logo16.png",
+      "128": "img/logo16.png"
+   },
+   "converted_from_user_script": true,
+   "options_page": "options.html",
+   "browser_action": {
+      "default_icon": "img/logo16.png",
+      "default_title": "G终结者",
+      "default_popup": "popup.html"
+      },
+   "permissions": [
+      "storage"
+   ],
+   "description": "",
+   "version": "1.0"
+}
+
