@@ -1,0 +1,15 @@
+{
+   "content_scripts": [ {
+      "exclude_globs": [  ],
+      "exclude_matches": [  ],
+      "include_globs": [ "http*" ],
+      "js": [ "script.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_idle"
+   } ],
+   "converted_from_user_script": true,
+   "description": "\u4E3A\u8C46\u74E3(www.douban.com)\u6DFB\u52A0\u5404\u79CD\u4EBA\u6027\u5316\u7684\u529F\u80FD\u3002",
+   "key": "uadkrsvNIg/2mkZzDbKMby9LmC6D5cFR+xIoLrEQkCw=",
+   "name": "\u8C46\u74E3\u52A9\u624B douban helper",
+   "version": "6.2012.4.21"
+}

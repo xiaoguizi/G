@@ -1,0 +1,86 @@
+﻿<!DOCTYPE html>
+<!--
+ * Copyright (c) 2010 The Chromium Authors. All rights reserved.  Use of this
+ * source code is governed by a BSD-style license that can be found in the
+ * LICENSE file.
+-->
+<html>
+  <head>
+  </head>
+  <body>
+    <script>
+		var cache;
+		function loadCache(){
+			var str = localStorage['cache'];
+			if(!str)
+				str = '{}';
+			return JSON.parse(str);
+		}
+		
+		function xmlHttp(content, id, callback){
+			var key = content.url;
+			if(content.cache && cache[key]){
+				callback({
+					id : id,
+					content : cache[key]
+				});
+				return ;
+			}
+			var xhr = new XMLHttpRequest();
+			xhr.onreadystatechange = function() {
+				if (xhr.readyState == 4) {
+					console.log("xhr.status:" + xhr.status);
+					if (xhr.status == 200 || xhr.status	== 201) {
+						var response ={
+							status : xhr.status,
+							header : xhr.getAllResponseHeaders(),
+							responseText : xhr.responseText
+						}
+						console.log(response)
+						if(content.cache){
+							cache[key] = response;
+							localStorage['cache']=JSON.stringify(cache);
+						}
+						var message = {
+							id : id,
+							content : response
+						};
+						callback(message);
+					}
+				}
+			}
+			if(content.method == 'GET'){
+				xhr.open("GET",content.url,true);
+				setHeaders(xhr, content.headers);
+				xhr.send(null);
+			}else{
+				xhr.open("POST",content.url,true);
+				setHeaders(xhr, content.headers);
+				xhr.send(content.data);
+			}
+		}
+		function setHeaders(xhr, headers){
+			for(var key in headers)
+				xhr.setRequestHeader(key, headers[key]);
+		}
+		
+		function onXhrRequest(request, sender, callback){
+			if(request.command == "xhr"){
+				console.log(request.content, request.id, callback);
+				xmlHttp(request.content, request.id, callback);
+			}else if(request.command == "clearXhrCache"){
+				localStorage.clear();
+				cache = {};
+			}
+		}
+		function init(){
+			console.log('Background page start!');
+			cache = loadCache();
+			chrome.extension.onRequest.addListener(onXhrRequest);
+		}
+		
+		init();
+		
+    </script>
+  </body>
+</html>

@@ -1,0 +1,15 @@
+{
+   "content_scripts": [ {
+      "exclude_globs": [  ],
+      "exclude_matches": [  ],
+      "include_globs": [ "http://tieba.baidu.com/*" ],
+      "js": [ "script.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_idle"
+   } ],
+   "converted_from_user_script": true,
+   "description": "",
+   "key": "QH0hdGBz8kHjOQqWgqGNPEWFqTaIT/+1Mo7mpW8fUEQ=",
+   "name": "\u6821\u957F\u4E4B\u6012",
+   "version": "0.8.2"
+}

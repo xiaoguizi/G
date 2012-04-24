@@ -1,0 +1,24 @@
+/*Medule movie*/
+a.movie_bt_true:link,
+a.movie_bt_true:visited,
+a.movie_bt_true:hover{
+	float:left;
+	display: inline-block;
+	background: #DC2E33;
+	border: 1px solid #cc0007;
+	color: white;
+	padding: 1px 16px;
+	border-radius:3px;
+	margin-right: 8px;
+}
+
+.movie_bt_false{
+	float:left;
+	display: inline-block;
+	padding: 1px 16px;
+	background: #4887E7;
+	border: 1px solid #3F77CD;
+	color: #FFF;
+	border-radius:3px;
+	margin-right: 8px;
+}

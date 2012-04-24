@@ -1,0 +1,19 @@
+{
+   "background_page": "background.html",
+   "content_scripts": [ {
+      "js": [ "init.js" ],
+      "matches": [ "http://tieba.baidu.com/*" ],
+      "run_at": "document_end"
+   } ],
+   "description": "\u767E\u5EA6\u8D34\u5427\u4E13\u7528\uFF1A\u53D1\u5E16\u52A0\u5BC6\uFF0C\u4E00\u952E\u67E5IP\uFF0C\u53EA\u770B\u6B64\u4EBA\uFF0C\u4E00\u952E\u8DF3\u8F6C\uFF0C\u8D34\u5427\u8868\u60C5\uFF0C\u63D0\u53D6\u90AE\u7BB1\uFF0C\u6574\u7406\u53D1\u8A00\uFF0C\u5F15\u7528\u961F\u5F62\uFF0C\u8D34\u5427\u5FEB\u6377\u952E\uFF0C\u81EA\u5B9A\u4E49\u7B7E\u540D\uFF0C\u548C\u8C10\u6D4B\u8BD5\u7B49\u7B49",
+   "icons": {
+      "128": "baidumiyu128.png",
+      "32": "baidumiyu32.png",
+      "48": "baidumiyu48.png"
+   },
+   "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQChqXrwTEHwGjD/QEPakyfEEDTJRYhD4vsgX59YAhsT1PW05Fc4QVgQ0stYoph6Cb6gpp60Ygox0ncapPQuhiQ3vjF1CpDjbv2d/ljqeBkISCFFCCS94YIfzz8ZDN/4pwoPKTm2GOs+41KvpgzEMzfcUXpUyiVAV7b8VSk/26tg5wIDAQAB",
+   "name": "\u767E\u5EA6\u5BC6\u8BED",
+   "permissions": [ "contextMenus", "tabs", "http://*/*", "https://*/*" ],
+   "update_url": "http://clients2.google.com/service/update2/crx",
+   "version": "4.0.5"
+}

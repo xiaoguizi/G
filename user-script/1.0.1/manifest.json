@@ -1,0 +1,15 @@
+{
+   "content_scripts": [ {
+      "exclude_globs": [  ],
+      "exclude_matches": [  ],
+      "include_globs": [ "http://v.youku.com/v_*.html" ],
+      "js": [ "script.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_idle"
+   } ],
+   "converted_from_user_script": true,
+   "description": "",
+   "key": "hQOWH9gM4/mnhuUaHRkW6arg73sU/MJLXTR17zSpH9g=",
+   "name": "\u540E\u53F0\u4F18\u9177\u89C6\u9891\u81EA\u52A8\u6682\u505C",
+   "version": "1.0"
+}

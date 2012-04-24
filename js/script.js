@@ -1,3 +1,7 @@
+/**
+ * 新浪爱问
+ */
+
 var dbIsak = function() {
         var title = $('html head title').text(),
             keyword1 = title.replace('(豆瓣)', '').trim(),
@@ -49,7 +53,7 @@ var dbIsak = function() {
 }
 
 /**
- * 自定义屏蔽QQ空间模块
+ * 屏蔽QQ空间模块
  * @return {[type]} [description]
  * @author koala
  */
@@ -100,10 +104,15 @@ var qzoneExcute = function() {
         }
         window.addEventListener("load", QzoneEvent, false);
 }
+
+/**
+ * 豆瓣电影下载
+ * @return {[type]}
+ */
 var dbMovie = function(){
     function mkQueryUrl(douban_url) {
         //data is book title
-        var timestamp = new Date().getTime();
+        //var timestamp = new Date().getTime();
         return "http://720p.so/api/movies/show.json?douban_url=" + douban_url;
     }
 
@@ -114,11 +123,33 @@ var dbMovie = function(){
     function getButton(url, has_attach) {
         var btn;
         if (has_attach) {
-            btn = '<a href="' + url + '"  title="点击去 720p.so 下载这部电影" style="float:left;display: inline-block;background: #DC2E33;border: 1px solid #cc0007;color: white;padding: 1px 16px;border-radius:3px;margin-right: 8px;" target="_blank">高清下载</a>';
+            var link = getMovieLink(url);
+            link = link ? link : url;
+            btn = '<a href="' + link + '"  title="下载资源" class="movie_bt_true" target="_blank">高清下载</a>';
         } else {
-            btn = '<a href="' + url + '" title="720p.so 没有找到电影资源." style="float:left;display: inline-block;padding: 1px 16px;background: #4887E7;border: 1px solid #3F77CD;color: #FFF;border-radius:3px;margin-right: 8px;" target="_blank">暂无资源</a>';
+            btn = '<span title="没有找到电影资源." class="movie_bt_false">暂无资源</span>';
         }
         return btn;
+    }
+
+    function getMovieLink(url){
+        var link;
+        $.ajax({
+            url: url,
+            datatype: "html",
+            type: "GET",
+            async: false,
+            success: function (cont) {
+                var node = $(".attach", cont);
+                if (node) {
+                    link = node.attr("href");
+                } else {
+                    link = url;
+                }
+            }
+
+        });
+        return link;
     }
 
     function queryAndGenerateButton(url) {
@@ -135,7 +166,7 @@ var dbMovie = function(){
                 btn = getButton(url, json.has_attach);
                 $('.a_stars').before(btn);
             }
-        })
+        });
     }
     var url = window.location.toString();
 

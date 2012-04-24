@@ -1,0 +1,15 @@
+{
+   "content_scripts": [ {
+      "exclude_globs": [  ],
+      "exclude_matches": [  ],
+      "include_globs": [ "http://movie.douban.com/subject/*" ],
+      "js": [ "script.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_idle"
+   } ],
+   "converted_from_user_script": true,
+   "description": "\u5728\u8C46\u74E3\u7535\u5F71\u9875\u9762\u663E\u793Ahttp://torrentproject.com/\u7684\u4E0B\u8F7D\u94FE\u63A5",
+   "key": "bw0VVm0qzm4mwOszHqfSP72fKcU8rkiW0zjFtryaM2w=",
+   "name": "\u8C46\u74E3\u7535\u5F71\u4E0B\u8F7D\u63D2\u4EF6",
+   "version": "1.0"
+}

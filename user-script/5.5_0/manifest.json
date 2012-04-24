@@ -1,0 +1,15 @@
+{
+   "content_scripts": [ {
+      "exclude_globs": [  ],
+      "exclude_matches": [  ],
+      "include_globs": [  ],
+      "js": [ "script.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_idle"
+   } ],
+   "converted_from_user_script": true,
+   "description": "OpenGG.Clean.Player",
+   "key": "ToYTQMh07mfdotrM/ObFif4qCwircY97G2zg2Khn53E=",
+   "name": "OpenGG.Clean.Player",
+   "version": "5.5"
+}

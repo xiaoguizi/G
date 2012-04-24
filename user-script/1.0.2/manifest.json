@@ -1,0 +1,15 @@
+{
+   "content_scripts": [ {
+      "exclude_globs": [  ],
+      "exclude_matches": [  ],
+      "include_globs": [ "*", "http://movie.youku.com/*", "http://tv.youku.com/*", "http://tv.tudou.com/*", "http://movie.tudou.com/*", "http://list.iqiyi.com/*", "http://localhost/*", "http://www.youku.com/", "http://www.tudou.com/", "http://www.iqiyi.com/" ],
+      "js": [ "script.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_idle"
+   } ],
+   "converted_from_user_script": true,
+   "description": "\u4F18\u9177\u7F51 \u5947\u827A\u9AD8\u6E05 \u571F\u8C46\u7F51\u7535\u5F71\u7535\u89C6\u5267\u5217\u8868\u6DFB\u52A0\u8C46\u74E3\u8BC4\u5206\u548C\u8BC4\u5206\u4EBA\u6570\uFF0C\u70B9\u51FB\u5206\u6570\u6587\u5B57\u94FE\u63A5\u67E5\u770B\u8BE5\u7535\u89C6\u5267/\u7535\u5F71\u5F71\u8BC4\u9875\u9762\u3002",
+   "key": "H5m1/VGkaRqpH4kvGg7JaTXEjDsipzKNwI5Xzu+JpEI=",
+   "name": "douban-rating",
+   "version": "1.0"
+}

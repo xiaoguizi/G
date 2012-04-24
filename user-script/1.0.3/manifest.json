@@ -1,0 +1,15 @@
+{
+   "content_scripts": [ {
+      "exclude_globs": [  ],
+      "exclude_matches": [  ],
+      "include_globs": [ "http://movie.douban.com/subject/*" ],
+      "js": [ "script.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_idle"
+   } ],
+   "converted_from_user_script": true,
+   "description": "",
+   "key": "o1AUFfGymU0tSJchbq1TFbOK0EzFRCJFH+DWDeJSZsA=",
+   "name": "doubanIMDb",
+   "version": "1.0"
+}

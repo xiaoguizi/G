@@ -1,0 +1,15 @@
+{
+   "content_scripts": [ {
+      "exclude_globs": [  ],
+      "exclude_matches": [  ],
+      "include_globs": [ "http://www.douban.com/*", "https://www.douban.com/*", "http://*.www.douban.com/*", "https://*.www.douban.com/*" ],
+      "js": [ "script.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_idle"
+   } ],
+   "converted_from_user_script": true,
+   "description": "A New Style Avatar for douban user Avatar",
+   "key": "zUNOqybzwbAEBspiZE8cg21SJC5Dpm2XsgNFcb1Rows=",
+   "name": "Douban New Style Avatar with CSS3",
+   "version": "1.0"
+}

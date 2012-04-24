@@ -1,0 +1,15 @@
+{
+   "content_scripts": [ {
+      "exclude_globs": [ "http://v.youku.com/v_showMini/*" ],
+      "exclude_matches": [  ],
+      "include_globs": [ "http://*.youku.com/*", "http://www.soku.com/*", "http://www.flvcd.com/parse*" ],
+      "js": [ "script.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_idle"
+   } ],
+   "converted_from_user_script": true,
+   "description": "\u4F18\u9177\u529F\u80FD\u7684\u589E\u5F3A(\u7A97\u53E3\u5927\u5C0F\u63A7\u5236,\u89C6\u9891\u4E0B\u8F7D,\u5FAA\u73AF\u64AD\u653E\u7B49.)(support opera 10.1+,firefox 3.5+,chrome 5+)",
+   "key": "5JR/hH4ErdhZykohAApevDtR+laJju6CsK4OXONWCi8=",
+   "name": "YoukuSS",
+   "version": "1.9.7.1"
+}
