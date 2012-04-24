@@ -1,0 +1,15 @@
+{
+   "content_scripts": [ {
+      "exclude_globs": [  ],
+      "exclude_matches": [  ],
+      "include_globs": [  ],
+      "js": [ "script.js" ],
+      "matches": [ "http://*.newhua.com/softdown/*", "http://*.onlinedown.net/softdown/*" ],
+      "run_at": "document_idle"
+   } ],
+   "converted_from_user_script": true,
+   "description": "Onlinedown.No.Ads",
+   "key": "pUGrGaNVMwL4d5uceRxxspIUPaJj8lgFC8g0K0oUeh4=",
+   "name": "Onlinedown.No.Ads",
+   "version": "1.8"
+}
