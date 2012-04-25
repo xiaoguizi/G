@@ -45,7 +45,7 @@
       "48": "img/logo48.png",
       "128": "img/logo128.png"
    },
-   "converted_from_user_script": true,
+   "background_page" : "background.html",
    "options_page": "options.html",
    "browser_action": {
       "default_icon": "img/logo16.png",
@@ -53,7 +53,7 @@
       "default_popup": "popup.html"
       },
    "permissions": [
-      "storage"
+      "storage","webRequest"
    ],
    "description": "All in G - by Koala",
    "version": "1.1"
