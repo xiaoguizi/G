@@ -20,112 +20,101 @@ function getHostName(index) {
  * 新浪爱问
  */
 var Isak = (function(){
-    var douban_url = window.location.href,
-        reg = /(\d{7,8})/g;  
-    this.douban_id = douban_url.match(reg);
     this.title = $('html head title').text();
     this.keyword1 = this.title.replace( '(豆瓣)', '' ).trim();  
     this.keyword2 = encodeURIComponent( this.keyword1 );
-    this.unitname = new Array('Y','Z','E','P','T','G','M','K');
-    this.unitsize = new Array(1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024,1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024,1024 * 1024 * 1024 * 1024 * 1024 * 1024,1024 * 1024 * 1024 * 1024 * 1024,1024 * 1024 * 1024 * 1024,1024 * 1024 * 1024,1024 * 1024,1024);
+    this.unitname = new Array('G', 'M', 'K'),
+    this.unitsize = new Array(1024 * 1024 * 1024, 1024 * 1024, 1024);
+    this.length = 30;
+    this.dataFilter = function(str){
+        if (typeof str !== "string") return "";
+        var reg = /(\;+)$/;
+        return str.replace(reg, "").trim();
+    }
     return this;
 })();
 
-var dbIsak = function() {
-        var title = $('html head title').text(),
-            keyword1 = title.replace('(豆瓣)', '').trim(),
-            keyword2 = encodeURIComponent(keyword1),
-            url = 'http://api.iask.sina.com.cn/api/isharesearch.php?key=' + keyword2 + '&datatype=json&start=0&num=5&keycharset=utf8',
-            html_title = '<div class="da3" style="margin-bottom:0px;padding-bottom:1px;"><h2><img src="http://iask.com/favicon.ico" width="15px;" height="15px;" style="margin-bottom:-2px;" />&nbsp;&nbsp;新浪爱问资源   · · · · · · </h2></div>',
-            html_body_start = '<div class="indent" id="db-doulist-section" style="padding-left:5px;border:1px #F4F4EC solid;"><ul class="bs">',
-            html_body_yes = '',
-            html_body_no = '<li>没有找到相关资料，<a href="http://ishare.iask.sina.com.cn/upload/?from=douban" title="资料上传" target="_blank"><b>立即上传</b></a>即可与豆友们分享！</li>',
-            html_body_end = '</ul>',
-            html_body_endmore = '<div style="text-align:right; padding:5px 10px 5px 0px;"><a href="http://ishare.iask.sina.com.cn/upload/?from=douban" target="_blank">分享资料</a>&nbsp;&nbsp;<a href="http://api.iask.sina.com.cn/api/search2.php?key=' + keyword2 + '&from=douban&format=" target="_blank">更多&hellip;</a></div>',
-            html_body_endend = '</div>',
-            length = 30,
-            unitname = new Array('K', 'M', 'G', 'T', 'P', 'E', 'Z', 'Y'),
-            unitsize = new Array(1024, 1024 * 1024, 1024 * 1024 * 1024, 1024 * 1024 * 1024 * 1024, 1024 * 1024 * 1024 * 1024 * 1024, 1024 * 1024 * 1024 * 1024 * 1024 * 1024, 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024, 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024 * 1024);
-        $.ajax({
-            type: 'GET',
-            dataType: 'script',
-            url: url,
-            success: function() {
-                if (iaskSearchResult.sp.m > 0) {
-                    var title, title2, image, filesize, url, unit;
-                    var regex = /([A-Z\u0391-\uffe5])/g;
-                    for (key in iaskSearchResult.sp.result) {
-                        title = iaskSearchResult.sp.result[key].title;
-                        title2 = title.replace(regex, "$1*");
-                        ellipsis = title2.length > length ? '..' : '';
-                        title2 = title2.substr(0, length).replace(/\*/g, '') + ellipsis;
-                        image = iaskSearchResult.sp.result[key].format;
-                        filesize = iaskSearchResult.sp.result[key].filesize;
-                        if (filesize < 1024) filesize = filesize + 'B'
-                        else {
-                            for (var i = 0; i < unitname.length; i++) {
-                                if (filesize > unitsize[i] || filesize == unitsize[i]) {
-                                    filesize = Math.round(filesize / unitsize[i] * 10) / 10 + unitname[i];
-                                    break;
-                                }
+var dbIsakBook = function() {
+    var url = 'http://api.iask.sina.com.cn/api/isharesearch.php?key=' + Isak.keyword2 + '&datatype=json&start=0&num=5&keycharset=utf8',
+        html_title = '<div class="da3" style="margin-bottom:0px;padding-bottom:1px;"><h2>新浪爱问资源   · · · · · · </h2></div><div class="indent" id="db-doulist-section" style="padding-left:5px;border:1px #F4F4EC solid;"><ul class="bs">',
+        html_body_yes = '',
+        html_body_no = '<li>没有找到相关资料，<a href="http://ishare.iask.sina.com.cn/upload/?from=douban" title="资料上传" target="_blank"><b>立即上传</b></a>即可与豆友们分享！</li></ul></div>',
+        html_end = '</ul><div style="text-align:right; padding:5px 10px 5px 0px;"><a href="http://ishare.iask.sina.com.cn/upload/?from=douban" target="_blank">分享资料</a>&nbsp;&nbsp;<a href="http://api.iask.sina.com.cn/api/search2.php?key=' + Isak.keyword2 + '&from=douban&format=" target="_blank">更多&hellip;</a></div></div>';
+    $.ajax({
+        type: 'GET',
+        dataType: 'text',
+        url: url,
+        success: function(data) {
+            var data = Isak.dataFilter(data);
+            eval('(' + data + ')');
+            if (iaskSearchResult.sp.m > 0) {
+                var title, title2, image, filesize, url, unit;
+                var regex = /([A-Z\u0391-\uffe5])/g;
+                for (key in iaskSearchResult.sp.result) {
+                    title = iaskSearchResult.sp.result[key].title;
+                    title2 = title.replace(regex, "$1*");
+                    ellipsis = title2.length > Isak.length ? '..' : '';
+                    title2 = title2.substr(0, Isak.length).replace(/\*/g, '') + ellipsis;
+                    image = iaskSearchResult.sp.result[key].format;
+                    filesize = iaskSearchResult.sp.result[key].filesize;
+                    if (filesize < 1024) filesize = filesize + 'B'
+                    else {
+                        for (var i = 0; i < Isak.unitname.length; i++) {
+                            if (filesize > Isak.unitsize[i] || filesize == Isak.unitsize[i]) {
+                                filesize = Math.round(filesize / Isak.unitsize[i] * 10) / 10 + Isak.unitname[i];
                             }
                         }
-                        url = iaskSearchResult.sp.result[key].url;
-                        html_body_yes += '<li><img src="http://www.sinaimg.cn/pfp/ask/images/' + image + '.gif" style="margin-bottom:-2px;" /> <a href="' + url + '?from=douban" title="' + title + '" target="_blank">' + title2 + '</a><span class="pl">(大小:' + filesize + ')</span></li>';
                     }
-                    $('.aside').prepend(html_title + html_body_start + html_body_yes + html_body_end + html_body_endmore + html_body_endend);
-                } else {
-                    $('.aside').prepend(html_title + html_body_start + html_body_no + html_body_end + html_body_endend);
+                    url = iaskSearchResult.sp.result[key].url;
+                    html_body_yes += '<li><img src="http://www.sinaimg.cn/pfp/ask/images/' + image + '.gif" style="margin-bottom:-2px;" /> <a href="' + url + '?from=douban" title="' + title + '" target="_blank">' + title2 + '</a><span class="pl">(大小:' + filesize + ')</span></li>';
                 }
+                $('.aside').prepend(html_title + html_body_yes + html_end);
+            } else {
+                $('.aside').prepend(html_title + html_body_no + html_end);
             }
-        });
+        }
+    });
 }
 
 var dbIsakMovie = function(){
-    var url = 'http://sikemi.sinaapp.com/douban_api.php?keyword=' + Isak.keyword2;
-    var html_title = '<div class="da3" style="margin-bottom:0px;padding-bottom:1px;"><h2>可下载的资源&nbsp; ·&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;·&nbsp;<span class="pl">(<a href="http://torrentproject.com/?s=' + Isak.keyword2 + '&btnG=Torrent+Search&num=20&start=0" target="_blank">全部</a>)</h2></span></div>'
-    var html_body_start = '<div class="indent" id="db-doulist-section" style="padding-left:5px;border:1px #F4F4EC solid;"><ul class="bs">';
-    var html_body_yes = '';
-    var html_body_no = '<li>没有找到相关资源，手动去<a href="http://torrentproject.com/?s='+Isak.keyword2+'&btnG=Torrent+Search&num=20&start=0" target="_blank">搜索</a></li>';
-    var html_body_end = '</ul>';
-    var html_body_endmore = '<div style="text-align:right; padding:5px 10px 5px 0px;"><a href="http://ratwu.com/2012/03/douban_download_plugin/" target="_blank">反馈</a></div>';
-    var html_body_endend = '</div>';
-    var length = 30;
-    $.getScript(url, function(data, textStatus, jqxhr) {
-       console.log(data); //data returned
-       console.log(textStatus); //success
-       console.log(jqxhr.status); //200
-       console.log('Load was performed.');
-    });
+    var url = 'http://sikemi.sinaapp.com/douban_api.php?keyword=' + Isak.keyword2,
+        html_title = '<div class="da3" style="margin-bottom:0px;padding-bottom:1px;"><h2>可下载的资源   · · · · · · </h2></span></div><div class="indent" id="db-doulist-section" style="padding-left:5px;border:1px #F4F4EC solid;"><ul class="bs">',
+        html_body_yes = '',
+        html_body_no = '<li>没有找到相关资源，手动去<a href="http://torrentproject.com" target="_blank">搜索</a></li>',
+        html_end = '</ul><div style="text-align:right; padding:5px 10px 5px 0px;"><a href="http://torrentproject.com/?s=' + Isak.keyword2 + '&btnG=Torrent+Search&num=20&start=0" target="_blank">更多&hellip;</a></div></div>';
+    
     $.ajax(
         {
             type : 'GET',
-            dataType : 'script',
+            dataType : 'text',
             url : url,
             success : function(data) {
-                alert(data);
+                eval('(' + data + ')'); 
                 if( iaskSearchResult.sp.m > 0 ) {
                     var title,title2, image, filesize, url, unit;
-                    var regex = /([A-Z\u0391-\uffe5])/g;
+                    var Regex = /([A-Z\u0391-\uffe5])/g;
+                    var Regex_torrent = /.*\/([^.]+)/i;
                     for( key in iaskSearchResult.sp.result ) {
                         title = iaskSearchResult.sp.result[key].title;
-                        title2 = Isak.title.replace( regex, "$1*" );
-                        ellipsis = title2.length > length ? '..' : '' ;
-                        title2 = title2.substr( 0, length ).replace( /\*/g, '' ) + ellipsis;
+                        title2 = title.replace( Regex, "$1*" );
+                        ellipsis = title2.length > Isak.length ? '..' : '' ;
+                        title2 = title2.substr( 0, Isak.length ).replace( /\*/g, '' ) + ellipsis;
                         filesize = iaskSearchResult.sp.result[key].filesize;
                         seeds    = iaskSearchResult.sp.result[key].seeds;
                         if( filesize < 1024 ) filesize = filesize+'B';
-                        for( var i=0; i<Isak.unitname.length; i++ ){
-                            if( filesize > Isak.unitsize[i] || filesize==Isak.unitsize[i] ){
-                                filesize = Math.round( filesize / Isak.unitsize[i] * 10 ) / 10 + Isak.unitname[i];
+                        else {
+                            for (var i = 0; i < Isak.unitname.length; i++) {
+                                if (filesize > Isak.unitsize[i] || filesize == Isak.unitsize[i]) {
+                                    filesize = Math.round(filesize / Isak.unitsize[i] * 10) / 10 + Isak.unitname[i];
+                                }
                             }
                         }
-                        url = iaskSearchResult.sp.result[key].url;
-                        html_body_yes += '<li><a href="' + url + '?from=douban" title="' + title + '" target="_blank">' + title2 + '</a><span class="pl">(' + filesize + '&nbsp;种子:' + seeds + ')</span></li>';
+                        url = iaskSearchResult.sp.result[key].url.match(Regex_torrent)[1].toUpperCase();
+                        html_body_yes += '<li><a href="http://torrage.com/torrent/' + url + '.torrent" title="' + title + '" target="_blank">' + title2 + '</a><span class="pl">(' + filesize + '&nbsp;种子:' + seeds + ')</span></li>';
                     }
-                    $( '.aside' ).prepend( html_title + html_body_start + html_body_yes + html_body_end + html_body_endmore + html_body_endend );
+                    $( '.aside' ).prepend( html_title + html_body_yes + html_end);
                 } else {
-                    $( '.aside' ).prepend( html_title + html_body_start + html_body_no + html_body_end + html_body_endend );
+                    $( '.aside' ).prepend( html_title + html_body_no + html_end );
                 }
             }
         }
@@ -284,7 +273,7 @@ switch (emHost) {
             dbIsakMovie();
         } 
         else {
-            contentEval( dbIsak );
+            dbIsakBook();
         }
         break;
 }
